@@ -1,3 +1,5 @@
+import re
+import markdown
 import requests
 
 class Anilist:
@@ -110,7 +112,10 @@ class Anilist:
                 d['title'] = row['title']['romaji']
 
             d['img'] = row['coverImage']['large']
-            d['date'] = f"{self.month[row['startDate']['month']]} {row['startDate']['year']}"
+            if row['startDate']['month'] or row['startDate']['year']:
+                d['date'] = f"{self.month[row['startDate']['month']]} {row['startDate']['year']}"
+            else:
+                d['date'] = ''
             d['format'] = row['format']
             if status == 'RELEASING' or status == None:
                 d['score'] = row['averageScore']
@@ -215,17 +220,32 @@ class Anilist:
     def get_char_details(self,id):
         query = '''
         query($id:Int){
-            Character(id:$id){
+            Character(id: $id) {
                 name {
                     first
                     middle
                     last
                 }
-                image{
+                image {
                     large
                 }
                 gender
                 description
+                media {
+                    edges {
+                        node {
+                            id
+                            type
+                            title {
+                                romaji
+                                english
+                            }
+                            coverImage {
+                                large
+                            }
+                        }
+                    }
+                }
             }
         }
         '''
@@ -237,6 +257,17 @@ class Anilist:
         res = {}
         res['name'] = f"{r['name']['first']} {r['name']['middle']} {r['name']['last']}".replace('None',"")
         res['img'] = r['image']['large']
-        res['gender'] = r['gender']
-        res['descrption'] = r['description']
+        res['gender'] = r['gender'][0]
+        res['descrption'] = markdown.markdown(re.sub('[~!].*[!~]','',r['description']), extensions=['md_in_html'])
+        res['realtions'] = []
+
+        for rel in r['media']['edges']:
+            data = {}
+            data['id'] = rel['node']['id']
+            if rel['node']['title']['english']:
+                data['title'] = rel['node']['title']['english']
+            else:
+                data['title'] = rel['node']['title']['romaji']
+            data['img'] = rel['node']['coverImage']['large']
+            res['realtions'].append(data)
         return res

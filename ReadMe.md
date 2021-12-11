@@ -173,3 +173,10 @@ This wrapper class contains functions like:
             .
         ]
     }
+
+# References
+
+1. [Anilist Api](https://anilist.gitbook.io/anilist-apiv2-docs/)
+2. [Graphql](http://graphql.org/learn/queries/)
+3. [Flask](https://flask.palletsprojects.com/en/2.0.x/quickstart/)
+4. [jinja](https://jinja.palletsprojects.com/en/3.0.x/templates/)

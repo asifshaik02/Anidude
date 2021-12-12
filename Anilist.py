@@ -142,6 +142,7 @@ class Anilist:
                     english
                     romaji
                 }
+                type
                 coverImage{
                     large
                 }
@@ -185,7 +186,8 @@ class Anilist:
         res['title'] = r['title']['english']
         res['subTitle'] = r['title']['romaji']
         res['img'] = r['coverImage']['large']
-        res['genres'] = r['genres']
+        res['type'] = r['type']
+        res['genres'] = ", ".join(map(str,r['genres']))
         res['description'] = r['description']
         res['score'] = r['averageScore']
         res['date'] = f"{r['startDate']['day']} {self.month[r['startDate']['month']]}"
@@ -258,12 +260,13 @@ class Anilist:
         res['name'] = f"{r['name']['first']} {r['name']['middle']} {r['name']['last']}".replace('None',"")
         res['img'] = r['image']['large']
         res['gender'] = r['gender'][0]
-        res['descrption'] = markdown.markdown(re.sub('[~!].*[!~]','',r['description']), extensions=['md_in_html'])
+        res['description'] = markdown.markdown(re.sub('[~!].*[!~]','',r['description']), extensions=['md_in_html'])
         res['realtions'] = []
 
         for rel in r['media']['edges']:
             data = {}
             data['id'] = rel['node']['id']
+            data['type'] = rel['node']['type']
             if rel['node']['title']['english']:
                 data['title'] = rel['node']['title']['english']
             else:

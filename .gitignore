@@ -1,2 +1,5 @@
 queries.txt
+todo
 env/
+__pycache__/
+static/images/favicon.ico:Zone.Identifier

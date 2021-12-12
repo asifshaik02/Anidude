@@ -114,9 +114,10 @@ This wrapper class contains functions like:
         ]
         date: "7 Apr"
         description: "Several hundred years ago, humans were nearly extermin...
+        type:"ANIME"
         duration: 24
         epi: 25
-        genres: (4) ['Action', 'Drama', 'Fantasy', 'Mystery']
+        genres: Action, Drama, Fantasy, Mystery
         img: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/mediu..."
         mal: "https://myanimelist.net/anime/16498"
         score: 85
@@ -143,7 +144,8 @@ This wrapper class contains functions like:
         ]
         date: "9 Sept"
         description: "In this post-apocalyptic sci-fi story, humanity has be...
-        genres: (4) ['Action', 'Drama', 'Fantasy', 'Mystery']
+        type:"MANGA"
+        genres: Action, Drama, Fantasy, Mystery
         img: "https://s4.anilist.co/file/anilistcdn/media/manga/cover/medi...
         mal: "https://myanimelist.net/manga/53390"
         score: 86
@@ -162,10 +164,11 @@ This wrapper class contains functions like:
         gender: "F"
         img: "https://s4.anilist.co/file/anilistcdn/character/large/b40..."
         name: "Mikasa  Ackerman"
-        descrption: "<p><strong>Height:</strong> 170 cm (5'7\")\n<strong>Posi..
+        description: "<p><strong>Height:</strong> 170 cm (5'7\")\n<strong>Posi..
         realtions:[
             {
                 id: 16498
+                type:"ANIME"
                 img: "https://s4.anilist.co/file/anilistcdn/media/anime/cov..."
                 title: "Attack on Titan"
             }

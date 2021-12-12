@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>{{ chr['name'] }} - Anidude</title>
+{% endblock title %}
+
+{% block style %}
+    <style>
+        .main.rel{
+            display: block;
+        }
+        .main.rel h2{
+            margin: 0 1.5em 1em;
+        }
+        .main-1 img{
+            height: 450px;
+            width: 330px;
+        }
+        .main ul{
+            display: flex;
+            margin: 0 2.5em;
+            overflow-x: auto;
+        }
+        .main ul li{
+            list-style: none;
+        }
+        .main ul a{
+            margin-right: 2.5em;
+        }
+        .main ul a:hover p{
+            color: var(--primary);
+        }
+        .main li img{
+            width: 240px;
+            height: 310px;
+            border-radius: 1em;
+            margin-bottom: 0.9em;
+        }
+        .main li p{
+            text-align: center;
+            width: 90%;
+        }
+    </style>
+{% endblock style %}
+
+{% block content %}
+    <section class="main">
+        <div class="main-1">
+            <img src="{{ chr['img'] }}" alt="poster">
+        </div>
+        <div class="main-2">
+            <div class="title">
+                <h1>{{ chr['name'] }} ({{ chr['gender'] }})</h1>
+            </div>
+            <div class="desc">
+                {{ chr['description'] }}
+            </div>
+        </div>
+    </section>
+    <section class="main rel">
+        <h2>Relations:</h2>
+        <ul>
+            {% for rel in chr['realtions'] %}
+            <a href="/{{ rel['type'].lower() }}/{{ rel['id'] }}">
+                <li>
+                    <img src="{{ rel['img'] }}" alt="poster">
+                    <p>{{ rel['title'] }}</p>
+                </li>
+            </a>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock content %}

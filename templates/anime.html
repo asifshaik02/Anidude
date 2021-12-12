@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>{{ ani['title'] }} - Anidude</title>
+{% endblock title %}
+
+{% block style %}
+<style>
+    .main{
+        align-items: unset;
+    }
+    .main.hide{
+        display: none;
+    }
+
+    .main-1 li,
+    .main-2 li{
+        font-weight: var(--font-regular);
+        margin-bottom: 1em;
+    }
+    .main-1 li:last-of-type,
+    .main-2 li:last-of-type{
+        margin-bottom: initial;
+    }
+    .main-1 li span{
+        color: var(--primary);
+        font-weight: var(--font-bold);
+        margin-right: 0.6em;
+    }
+
+    .title .title-t{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .title-t h1{
+        font-weight: var(--font-medium);
+    }
+    .title-t p{
+        color: var(--secondary);
+    }
+    .title span{
+        font-size: 24px;
+        color: var(--primary);
+    }
+
+    .btn-outline-info{
+        color: var(--primary);
+        border-color: var(--primary);
+    }
+    .btn-outline-info:hover{
+        background-color: var(--primary);
+    }
+    #shwmr{
+        display: block;
+        margin: 1% 45%;
+    }
+
+    .main-1.details{
+        width: 50%;
+        line-height: 2.5;
+    }
+
+
+    .main-2.char{
+        width: 20%;
+    }
+
+    .main-2.char li{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .main-2.char li img{
+        border-radius: 50%;
+    }
+
+    .main li a:hover{
+        color: var(--primary);
+    }
+
+    
+    </style>
+{% endblock style %}
+
+{% block content %}
+    <section class="main">
+        <div class="main-1">
+            <img src="{{ ani['img'] }}" alt="poster">
+        </div>
+
+        <div class="main-2">
+            <div class="title">
+                <div class="title-t">
+                    <h1>{{ ani['title'] }}</h1>
+                    <p>{{ ani['subTitle'] }}</p>
+                </div>
+                <span>{{ ani['score'] }}%</span>
+            </div>
+
+            <div class="desc">
+                {{ ani['description'] }}
+            </div>
+        </div>
+    </section>
+    <button id="shwmr" type="button" class="btn btn-outline-info" onclick="showHide()">Show more</button>
+    <section class="main hide" id="showHide">
+        <ul class="main-1 details">
+            <h2>Details:</h2>
+            <li><span>Season: </span>{{ ani['season'] }}</li>
+            <li><span>Year: </span>{{ ani['seasonYear'] }}</li>
+            <li><span>Start date: </span>{{ ani['date'] }}</li>
+            <li><span>Genres: </span>{{ ani['genres'] }}</li>
+            {% if ani['type'] == "ANIME" %}    
+            <li><span>Episodes: </span>{{ ani['epi'] }}</li>
+            <li><span>Duration: </span>{{  ani['duration'] }}m</li>
+            {% else %}
+            <li><span>Volumes: </span>{{ ani['vol'] }}</li>
+            <li><span>Chapters: </span>{{  ani['chapter'] }}</li>
+            {% endif %}
+            <li><span>External links: </span> <a href="{{ ani['anilist'] }}" target="_blank">Anilist</a>, <a href="{{ ani['mal'] }}" target="_blank">MAL</a></li>
+        </ul>
+        <ul class="main-2 char">
+            <h2>Characters:</h2>
+            {% for ch in ani['char'] %}    
+                <li>
+                    <img src="{{ ch['img'] }}" width="45px" height="45px">
+                    <a href="/character/{{ ch['id'] }}">{{ ch['name'] }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+    <script>
+        function showHide() {
+            showMore = document.getElementById("showHide");
+            btn = document.getElementById("shwmr");
+            showMore.classList.toggle("hide");
+
+            if (window.getComputedStyle(showMore).display== "none"){
+                btn.innerText = "Show More"
+            }
+            else if(window.getComputedStyle(showMore).display == "flex"){
+                btn.innerText = "Show Less"
+            }
+        }
+    </script>
+{% endblock content %}

@@ -6,7 +6,7 @@
 
 {% block style %}
 <style>
-    .main{
+    .main:last-of-type{
         align-items: unset;
     }
     .main.hide{
@@ -100,7 +100,7 @@
             </div>
 
             <div class="desc">
-                {{ ani['description'] }}
+                {{ ani['description']|safe }}
             </div>
         </div>
     </section>

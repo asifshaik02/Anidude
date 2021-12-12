@@ -46,7 +46,7 @@
 {% block content %}
     <section class="main">
         <div class="main-1">
-            <img src="{{ chr['img'] }}" alt="poster">
+            <img src="{{ chr['img'] }}" alt="poster" onerror="this.src='../static/images/default.png'">
         </div>
         <div class="main-2">
             <div class="title">
@@ -63,7 +63,7 @@
             {% for rel in chr['realtions'] %}
             <a href="/{{ rel['type'].lower() }}/{{ rel['id'] }}">
                 <li>
-                    <img src="{{ rel['img'] }}" alt="poster">
+                    <img src="{{ rel['img'] }}" alt="poster" onerror="this.src='../static/images/default.png'">
                     <p>{{ rel['title'] }}</p>
                 </li>
             </a>

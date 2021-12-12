@@ -87,7 +87,7 @@
 {% block content %}
     <section class="main">
         <div class="main-1">
-            <img src="{{ ani['img'] }}" alt="poster">
+            <img src="{{ ani['img'] }}" alt="poster" onerror="this.src='../static/images/default.png'">
         </div>
 
         <div class="main-2">
@@ -125,7 +125,7 @@
             <h2>Characters:</h2>
             {% for ch in ani['char'] %}    
                 <li>
-                    <img src="{{ ch['img'] }}" width="45px" height="45px">
+                    <img src="{{ ch['img'] }}" width="45px" height="45px" onerror="this.src='../static/images/default.png'">
                     <a href="/character/{{ ch['id'] }}">{{ ch['name'] }}</a>
                 </li>
             {% endfor %}
@@ -142,6 +142,7 @@
             }
             else if(window.getComputedStyle(showMore).display == "flex"){
                 btn.innerText = "Show Less"
+                showMore.scrollIntoView({behavior: "smooth"})
             }
         }
     </script>

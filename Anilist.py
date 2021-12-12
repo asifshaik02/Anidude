@@ -161,7 +161,7 @@ class Anilist:
                 id
                 season
                 seasonYear
-                characters(page:1,role:MAIN,perPage:6) {
+                characters(page:1,perPage:6,sort:ROLE) {
                     nodes{
                         id
                         image {
@@ -183,13 +183,17 @@ class Anilist:
         r = requests.post(self.base_url, json={'query': query, 'variables': variables}).json()['data']['Media']
 
         res = {}
-        res['title'] = r['title']['english']
+        if r['title']['english']:
+            res['title'] = r['title']['english']
+        else:
+            res['title'] = r['title']['romaji']
+
         res['subTitle'] = r['title']['romaji']
         res['img'] = r['coverImage']['large']
         res['type'] = r['type']
         res['genres'] = ", ".join(map(str,r['genres']))
         res['description'] = r['description']
-        res['score'] = r['averageScore']
+        res['score'] = f"{r['averageScore']}".replace('None','0')
         res['date'] = f"{r['startDate']['day']} {self.month[r['startDate']['month']]}"
         res['season'] = r['season']
         res['seasonYear'] = r['seasonYear']
@@ -233,7 +237,7 @@ class Anilist:
                 }
                 gender
                 description
-                media {
+                media(sort:POPULARITY_DESC) {
                     edges {
                         node {
                             id
@@ -259,7 +263,7 @@ class Anilist:
         res = {}
         res['name'] = f"{r['name']['first']} {r['name']['middle']} {r['name']['last']}".replace('None',"")
         res['img'] = r['image']['large']
-        res['gender'] = r['gender'][0]
+        res['gender'] = f"{r['gender']}".replace('None',' ')[0]
         res['description'] = markdown.markdown(re.sub('[~!].*[!~]','',r['description']), extensions=['md_in_html'])
         res['realtions'] = []
 

@@ -1,7 +1,247 @@
 {% extends 'base.html' %}
+
 {% block title %}
     <title>Home - Anidue</title>
 {% endblock title %}
-{% block content %}
+
+{% block style %}
+    <style>
+        .carousel-item{
+            height: 20rem;
+        }
+        .carousel-item img{
+            opacity: 0.3;
+            height: 100%;
+        }
+        .carousel-caption{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-height: 90%;
+        }
+        .carousel-caption p{
+            width: 90%;
+            height: 80%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .carousel-control-prev,
+        .carousel-control-next{
+            cursor: pointer;
+        }
+        .top{
+            margin: 0 0.5em;
+        }
+        .top-head{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-head h2{
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .arrows .bi{
+            font-size: 35px;
+            cursor: pointer;
+        }
+        .top-body{
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        .item{
+            position: relative;
+            transition: transform .3s ease-out;
+        }
+        .item img{
+            width: 200px;
+            height: 300px;
+            border-radius: 25px;
+            padding: 1em;
+        }
+        .item:last-of-type{
+            margin-right: unset;
+        }
+        .item:hover img{
+            filter: blur(3px);
+        }
+        .item:hover{
+            transform: translate(0, -5px);
+        }
+        .overlay{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            width: 168px;
+            height: 268px;
+            display: none;
+            z-index: 2;
+            margin: 1em;
+            border-radius: 9px;
+        }
+        .item:hover .overlay{
+            display: block;
+        }
+        .text-overlay{
+            position: absolute;
+            top: 1px;
+            bottom: -1px;
+            right: -1px;
+            left: 1px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            padding: 1em;
+            z-index: 5;
+        }
+        .item:hover .text-overlay{
+            display: flex;
+        }
+        .text-overlay p{
+            text-align: center;
+            font-weight: var(--font-bold);
+        }
+    </style>
+{% endblock style %}
+
+{% block carousel %}
+
+    <section id="mycarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+        <div class="carousel-inner">
+            {% for cn in c %}   
+                <div class="carousel-item" data-interval="100">
+                    <img src="{{ cn['img'] }}" alt="Banner" class="d-block w-100">
+                    <div class="carousel-caption">
+                        <h5>{{ cn['title'] }}</h5>
+                        <p>{{ cn['descrption']|safe }}</p>
+                        <a href="/anime/{{ cn['id'] }}" class="btn btn-outline-info">Show details</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <a class="carousel-control-prev" role="button" data-bs-target="#mycarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </a>
+        <a class="carousel-control-next" role="button" data-bs-target="#mycarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
+    </section>
     
+{% endblock carousel %}
+
+{% block content %}
+
+    <section class="top">
+        <div class="top-head">
+            <h2>Top Aring</h2>
+            <div class="arrows">
+                <i class="bi bi-arrow-left-short" onclick="slide('left','1')"></i>
+                <i class="bi bi-arrow-right-short" onclick="slide('right','1')"></i>
+            </div>
+        </div>
+        <div id="1" class="top-body">
+            {% for a in ta %}
+            <a href="/anime/{{ a['id'] }}"  class="item">
+                <img src="{{ a['img'] }}" alt="poster" onerror="this.src='../static/images/default.png'">
+                <div class="text-overlay">
+                    <p>{{ a['score'] }}%</p>
+                    <p>{{ a['title'] }}</p>
+                    <p>{{ a['date'] }}</p>
+                </div>
+                <div class="overlay"></div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="top">
+        <div class="top-head">
+            <h2>Top Upcoming</h2>
+            <div class="arrows">
+                <i class="bi bi-arrow-left-short" onclick="slide('left','2')"></i>
+                <i class="bi bi-arrow-right-short" onclick="slide('right','2')"></i>
+            </div>
+        </div>
+        <div id="2" class="top-body">
+            {% for a in tu %}
+            <a href="/anime/{{ a['id'] }}"  class="item">
+                <img src="{{ a['img'] }}" alt="poster" onerror="this.src='../static/images/default.png'">
+                <div class="text-overlay">
+                    <p>{{ a['title'] }}</p>
+                    <p>{{ a['date'] }}</p>
+                </div>
+                <div class="overlay"></div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="top">
+        <div class="top-head">
+            <h2>All Time Popular</h2>
+            <div class="arrows">
+                <i class="bi bi-arrow-left-short" onclick="slide('left','3')"></i>
+                <i class="bi bi-arrow-right-short" onclick="slide('right','3')"></i>
+            </div>
+        </div>
+        <div id="3" class="top-body">
+            {% for a in tan %}
+            <a href="/anime/{{ a['id'] }}"  class="item">
+                <img src="{{ a['img'] }}" alt="poster" onerror="this.src='../static/images/default.png'">
+                <div class="text-overlay">
+                    <p>{{ a['score'] }}%</p>
+                    <p>{{ a['title'] }}</p>
+                    <p>{{ a['date'] }}</p>
+                </div>
+                <div class="overlay"></div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="top">
+        <div class="top-head">
+            <h2>Top Manga</h2>
+            <div class="arrows">
+                <i class="bi bi-arrow-left-short" onclick="slide('left','4')"></i>
+                <i class="bi bi-arrow-right-short" onclick="slide('right','4')"></i>
+            </div>
+        </div>
+        <div id="4" class="top-body">
+            {% for a in tm %}
+            <a href="/manga/{{ a['id'] }}"  class="item">
+                <img src="{{ a['img'] }}" alt="poster" onerror="this.src='../static/images/default.png'">
+                <div class="text-overlay">
+                    <p>{{ a['score'] }}%</p>
+                    <p>{{ a['title'] }}</p>
+                    <p>{{ a['date'] }}</p>
+                </div>
+                <div class="overlay"></div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+
+
+
+
+  <script>
+    document.querySelector(".carousel .carousel-inner .carousel-item").classList.add("active");
+    function slide(dir,index) {
+        if (dir == 'left') {
+            document.getElementById(index).scrollBy({left:-184,behavior:'smooth'})
+        }
+        else{
+            document.getElementById(index).scrollBy({left:+184,behavior:'smooth'})
+        }
+    }
+  </script>
 {% endblock content %}

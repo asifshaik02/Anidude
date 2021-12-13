@@ -25,6 +25,7 @@ class Anilist:
         {
             Page(page: 1, perPage: 8) {
                 media(sort: TRENDING_DESC,type: ANIME) {
+                    id
                     title {
                         english
                     }
@@ -39,6 +40,7 @@ class Anilist:
 
         for row in r.json()['data']['Page']['media']:
             d = {}
+            d['id'] = row['id']
             d['title'] = row["title"]['english']
             d['img'] = row['bannerImage']
             d['descrption'] = row['description']

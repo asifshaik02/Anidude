@@ -9,9 +9,23 @@
         .main.rel{
             display: block;
         }
-        .main.rel h2{
-            margin: 0 1.5em 1em;
+        .head{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+        .head h2{
+            margin: 0 3em;
+            font-size: 18px;
+        }
+
+        .arrows .bi{
+            font-size: 35px;
+            cursor: pointer;
+        }
+        /* .main.rel h2{
+            margin: 0 1.5em 1em;
+        } */
         .main-1 img{
             height: 400px;
             width: 300px;
@@ -19,7 +33,7 @@
         .main ul{
             display: flex;
             margin: 0 2.5em;
-            overflow-x: auto;
+            overflow-x: hidden;
         }
         .main ul li{
             list-style: none;
@@ -86,8 +100,16 @@
         </div>
     </section>
     <section class="main rel">
-        <h2>Relations:</h2>
-        <ul>
+        <div class="head">
+            <h2>Relations:</h2>
+            <div class="btns">
+                <div class="arrows">
+                    <i class="bi bi-arrow-left-short" onclick="slide('left','1')"></i>
+                    <i class="bi bi-arrow-right-short" onclick="slide('right','1')"></i>
+                </div>
+            </div>
+        </div>
+        <ul id="1">
             {% for rel in chr['realtions'] %}
             <a href="/{{ rel['type'].lower() }}/{{ rel['id'] }}">
                 <li>

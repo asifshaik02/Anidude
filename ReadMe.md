@@ -49,6 +49,7 @@ This wrapper class contains functions like:
         descrption: "Gold Roger was known as the Pirate King, the strongest....
         img: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/21-wf...
         title: "ONE PIECE"
+        id: 21
     }
 <div id="2"></div>
 

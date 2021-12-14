@@ -114,7 +114,7 @@ class Anilist:
                 d['title'] = row['title']['romaji']
 
             d['img'] = row['coverImage']['large']
-            if row['startDate']['month'] or row['startDate']['year']:
+            if row['startDate']['month'] and row['startDate']['year']:
                 d['date'] = f"{self.month[row['startDate']['month']]} {row['startDate']['year']}"
             else:
                 d['date'] = ''
@@ -196,7 +196,10 @@ class Anilist:
         res['genres'] = ", ".join(map(str,r['genres']))
         res['description'] = r['description']
         res['score'] = f"{r['averageScore']}".replace('None','0')
-        res['date'] = f"{r['startDate']['day']} {self.month[r['startDate']['month']]}"
+        try:
+            res['date'] = f"{r['startDate']['day']} {self.month[r['startDate']['month']]}"
+        except:
+            res['date'] = ''
         res['season'] = r['season']
         res['seasonYear'] = r['seasonYear']
         res['anilist'] = f'https://anilist.co/{_type}/{id}'.lower()
@@ -279,4 +282,47 @@ class Anilist:
                 data['title'] = rel['node']['title']['romaji']
             data['img'] = rel['node']['coverImage']['large']
             res['realtions'].append(data)
+        return res
+
+    def search(self,q):
+        query = '''
+        query($q:String){
+            Page{
+                media(search:$q,sort:SEARCH_MATCH,isAdult:false){
+                    id
+                    title{
+                        english
+                        romaji
+                    }
+                    type
+                    coverImage{
+                        large
+                    }
+                }
+                pageInfo{
+                    total
+                    lastPage
+                    currentPage
+                }
+            }
+        }
+        '''
+        variables = {
+            'q':q
+        }
+        r = requests.post(self.base_url, json={'query': query, 'variables': variables}).json()['data']['Page']['media']
+
+        res = []
+        for media in r:
+            d = {}
+            d['id'] = media['id']
+
+            if media['title']['english']:
+                d['title'] = media['title']['english']
+            else:
+                d['title'] = media['title']['romaji']
+
+            d['img'] = media['coverImage']['large']
+            d['type'] = media['type'].lower()
+            res.append(d)
         return res

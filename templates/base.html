@@ -60,10 +60,13 @@
         }
         header{
             padding: 1em 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        header a{
-            margin: 1em;
+        header a.logo{
+            margin: 0 1em;
             font-weight: var(--font-black);
             font-size: 2.3em;
         }
@@ -71,8 +74,25 @@
             color: var(--font);
             text-decoration: none;
         }
-        header a span{
+        header a.logo span{
             color: var(--primary);
+        }
+        .search-box{
+            margin: 0 4.5em;
+        }
+        .search-box input{
+            height: 40px;
+            width: 275px;
+            outline: none;
+            color: black;
+            border: none;
+            border-radius: 25px;
+            padding: 0 1em;
+        }
+        .bi-search{
+            position: relative;
+            right: 15%;
+            color: black;
         }
         .content{
             margin: 1em;
@@ -93,6 +113,7 @@
             margin-left:3.5em;
             display: flex;
             flex-direction: column;
+            width: 100%;
         }
         .main-2 .title{
             margin-bottom: 2em;
@@ -115,9 +136,18 @@
 </head>
 <body>
     <header>
-        <a href="/">
+        <a class="logo" href="/">
             Ani<span>Dude</span>
         </a>
+        <div class="search-box">
+            <form id="searchBox"  action="/search/1" method="post">
+                <input type="text" name="q" placeholder="Search.." />
+                <a href="javascript:document.getElementById('searchBox').submit();">
+                    <i class="bi bi-search"></i>
+                </a>
+            </form>
+            
+        </div>
     </header>
     {% block carousel %}
         

@@ -96,10 +96,10 @@
     <script>
         function navigate(dir,pageInfo) {
             if (dir == 'right' && pageInfo['page'] + 1 <= pageInfo['total']){
-                location.href = `../search/${pageInfo['page'] + 1}`;
+                location.href = `/search/${pageInfo['page'] + 1}`;
             }
             else if(dir == 'left' && pageInfo['page'] - 1 > 0){
-                location.href = `../search/${pageInfo['page'] - 1}`;
+                location.href = `/search/${pageInfo['page'] - 1}`;
             }
         }
         if ({{ pi['total'] }} == 1) {

@@ -203,7 +203,7 @@ class Anilist:
         res['season'] = r['season']
         res['seasonYear'] = r['seasonYear']
         res['anilist'] = f'https://anilist.co/{_type}/{id}'.lower()
-        res['mal'] = f'https://myanimelist.net/{_type}/{id}'.lower()
+        res['mal'] = f'https://myanimelist.net/{_type}/{r["idMal"]}'.lower()
         res['char'] = []
         if _type == 'ANIME':
             res['epi'] = r['episodes']
